@@ -37,4 +37,4 @@ PS: __All__ functionality of the plugin is supported on all platforms.
 * [API] (https://yogergames.gitlab.io/stathat/api/)
 * [Change log] (https://yogergames.gitlab.io/stathat/changelog/)
 * [Forum Support] (https://forums.coronalabs.com/forum/654-corona-store-plugins/) 
-* {{< email email="support@yogergames.com">}} Email for support {{< /email >}}
+* Email for support - support@yogergames.com 
