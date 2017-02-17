@@ -6,13 +6,15 @@
 -- REPLACE THESE VARIABLES WITH YOUR STATHAT ACCOUNT NAME AND ACCESS TOKEN
 -----------------------------------
 
-local USER_KEY = "hello@example.com"
-local ACCESS_TOKEN = "replace_me"
+local USER_KEY = "hello@example.com" -- REPLACE WITH YOUR OWN USER KEY
+local ACCESS_TOKEN = nil -- REPLACE WITH YOUR OWN ACCESS TOKEN
 
 -----------------------------------
 -- Setup
 -----------------------------------
+local stathat = require("plugin.stathat")
 local widget = require("widget")
+
 display.setDefault( "background", 0.9, 0.9, 0.9 )
 local w, h = display.contentWidth,display.contentHeight
 -----------------------------------
@@ -28,6 +30,7 @@ local totalCountLabel
 local totalCountText
 local timerId
 local statCountMap = {}
+local countHasBeenSent = false
 -----------------------------------
 -- Forward declare functions
 -----------------------------------
@@ -40,9 +43,6 @@ local RefreshCountButton
 -----------------------------------
 -- Stathat initialization
 -----------------------------------
--- Require stathat
-local stathat = require("plugin.stathat")
-
 -- Initialize stathat
 local options = {
     api = "ez",
@@ -144,12 +144,18 @@ function StathatCallback(event)
     end
 end
 -----------------------------------
--- Stathat operations
+-- Stathat API
 -----------------------------------
 local function StathatCount()
     requestId = stathat.count(statName, 1, nil, StathatCallback)
+    print("stathat count sent. id " .. tostring(requestId))
+    countHasBeenSent = true
 end
 
+-----------------------------------
+-- Stathat Export API - REQUIRES ACCESS_TOKEN to be set
+-- Get it at https://www.stathat.com/access
+-----------------------------------
 function StathatDelete()
     stathat.delete(statId, StathatCallback)
 end
@@ -159,9 +165,10 @@ function StathatList()
 end
 
 function StathatInfo()
-    stathat.info(StathatCallback, statName)
+    if countHasBeenSent and ACCESS_TOKEN then
+        stathat.info(StathatCallback, statName)
+    end
 end
-StathatInfo() -- Try to get info for stat immediately
 
 function StathatData()
     if timerId then
@@ -205,11 +212,9 @@ textField:resizeFontToFitHeight()
 textField.text = ""
 textField:addEventListener( "userInput",
     function(event)
-        if ( event.phase == "submitted" ) then
-        -- Output resulting text from "defaultField"
+        if ( event.phase == "submitted" or event.phase == "editing") then
             statName = event.target.text
             RefreshCountButtonLabel()
-            print ("new stat name: " .. statName)
         end
     end
     )

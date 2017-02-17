@@ -16,7 +16,9 @@ Here are a few benefits of using Stathat for analytics and statistics
 ## How to install
 1. Download the files in this repo (https://github.com/yogergames/plugin-stathat/archive/master.zip)
 2. Unpack the zip file
-3. Replace the USER_KEY and ACCESS_TOKEN variables with your data in main.lua
+3. Register for an account at [Stathat] (https://www.stathat.com/)
+4. Get the ACCESS_TOKEN at [stathat.com/access](https://www.stathat.com/access). It's required if you try to fetch stat data
+5. Replace the USER_KEY and ACCESS_TOKEN variables with your data in main.lua
 
 
 ## How to use
@@ -37,4 +39,4 @@ PS: __All__ functionality of the plugin is supported on all platforms.
 * [API] (https://yogergames.gitlab.io/stathat/api/)
 * [Change log] (https://yogergames.gitlab.io/stathat/changelog/)
 * [Forum Support] (https://forums.coronalabs.com/forum/654-corona-store-plugins/) 
-* Email for support - support@yogergames.com 
+* Email for support - support@yogergames.com
